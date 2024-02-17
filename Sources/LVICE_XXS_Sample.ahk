@@ -1,5 +1,4 @@
 #Requires AutoHotKey v2.0
-#Include Class_LVICE_XXS.ahk
 MainGui := Gui(, "LVICE_XXS Test")
 MainGui.MarginX := 20
 MainGui.MarginY := 20
@@ -12,6 +11,7 @@ Loop 16
 Loop 16
    MainLV.Add("")
 MainLV.ModifyCol()
+MainGui.AddButton("xm", "Show changes").OnEvent("Click", ShowChanges)
 MainGui.OnEvent("Close", MainGuiClose)
 MainGui.Show()
 LVICE := LVICE_XXS(MainLV)
@@ -19,4 +19,12 @@ LVICE := LVICE_XXS(MainLV)
 MainGuiClose(GuiObj) {
    GuiObj.Destroy()
    ExitApp
+}
+
+ShowChanges(*) {
+   Local Out := ""
+   For X In LVICE.Changes
+      Out .= X.Row . " - " . X.Col "`n"
+   MsgBox(Out, LVICE.Changes.Length . " changes")
+   LVICE.Changes.Length := 0 ; <<<<< if you want to reset the array
 }
