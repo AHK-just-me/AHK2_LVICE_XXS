@@ -13,6 +13,7 @@ Class LVICE_XXS {
       LV.OnNotify(-3, This.DoubleClickFunc)
       This.LV := LV
       This.HWND := LV.Hwnd
+      This.Changes := []
    }
    ; -------------------------------------------------------------------------------------------------------------------
    __Delete() {
@@ -73,8 +74,10 @@ Class LVICE_XXS {
       OnMessage(0x0111, This.CommandFunc, 0)
       If (TxtPtr := NumGet(L, OffText, "UPtr")) {
          ItemText := StrGet(TxtPtr)
-         If (ItemText != This.ItemText)
+         If (ItemText != This.ItemText) {
             LV.Modify(This.Item + 1, "Col" . (This.Subitem + 1), ItemText)
+            This.Changes.Push({Row: This.Item + 1, Col: This.Subitem + 1})
+         }
       }
       Return False
    }
