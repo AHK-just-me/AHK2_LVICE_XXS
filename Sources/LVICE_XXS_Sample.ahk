@@ -1,4 +1,5 @@
 #Requires AutoHotKey v2.0
+#Include Class_LVICE_XXS.ahk
 MainGui := Gui(, "LVICE_XXS Test")
 MainGui.MarginX := 20
 MainGui.MarginY := 20
